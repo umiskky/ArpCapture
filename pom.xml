@@ -95,7 +95,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.5</version>
                 <configuration>
-                    <mainClass>org.umiskky/org.umiskky.Launcher</mainClass>
+                    <mainClass>com.umiskky/com.umiskky.Launcher</mainClass>
                     <stripDebug>true</stripDebug>
                     <compress>2</compress>
                     <noHeaderFiles>true</noHeaderFiles>
