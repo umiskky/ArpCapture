@@ -3,6 +3,7 @@ module com.umiskky {
     requires javafx.fxml;
     requires lombok;
     requires com.jfoenix;
+    requires org.pcap4j.core;
 
     opens com.umiskky.view.main to javafx.fxml;
 

@@ -33,11 +33,11 @@ public class ViewHandler {
         root = loader.load();
         switch (viewToOpen){
             case "MainView":
-                MainViewController mainView = loader.getController();
-                mainView.init(viewModelFactory.getMainViewModel());
+                MainViewController mainViewController = loader.getController();
+                mainViewController.init(viewModelFactory.getMainViewModel());
                 stage.setTitle("ArpCapture");
                 break;
-            case "Primary":
+            case "OtherView":
                 break;
             default:
                 break;
