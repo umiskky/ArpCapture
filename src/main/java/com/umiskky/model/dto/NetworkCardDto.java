@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class NetworkCardDto {
 
     private String name;
+    private String description;
     private String address;
     private String netmask;
     private String broadcastAddr;
