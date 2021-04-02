@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.umiskky.view.main.MainViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.umiskky.view.main.MainViewController">
    <children>
       <BorderPane layoutX="76.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -42,6 +45,39 @@
                </children>
             </AnchorPane>
          </top>
+         <left>
+            <AnchorPane prefHeight="377.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox layoutX="14.0" layoutY="61.0" prefHeight="376.8" prefWidth="150.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="165.0" text="网卡信息">
+                           <font>
+                              <Font name="Microsoft YaHei Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="30.0" prefWidth="165.0" text="MAC">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="macAddr" prefHeight="30.0" prefWidth="165.0" />
+                        <Label prefHeight="30.0" prefWidth="165.0" text="IP">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ipAddr" prefHeight="30.0" prefWidth="165.0" />
+                        <Label prefHeight="30.0" prefWidth="165.0" text="Netmask">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="netmask" prefHeight="30.0" prefWidth="165.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </left>
       </BorderPane>
    </children>
 </AnchorPane>

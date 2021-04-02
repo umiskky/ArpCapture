@@ -1,11 +1,10 @@
 package com.umiskky.view.main;
 
-import com.umiskky.model.dto.NetworkCardDto;
 import com.umiskky.viewmodel.main.MainViewModel;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 
@@ -15,9 +14,16 @@ public class MainViewController {
     @FXML
     private ChoiceBox<String> networkCardSelector;
 
-    private final static String EMPTYINFO = "选择工作网卡";
+    @FXML
+    private Label macAddr;
 
-    private StringProperty networkCardSelected;
+    @FXML
+    private Label ipAddr;
+
+    @FXML
+    private Label netmask;
+
+    private final static String EMPTYINFO = "选择工作网卡";
     private ArrayList<String> networkCards;
 
     private MainViewModel mainViewModel;
@@ -26,6 +32,7 @@ public class MainViewController {
         this.mainViewModel = mainViewModel;
         bindInit();
         networkCardSelectorInit();
+        addListener();
     }
 
     /**
@@ -33,7 +40,9 @@ public class MainViewController {
      * @apiNote this method is used to init property bindings
      */
     public void bindInit(){
-//        networkCardSelected.bindBidirectional(mainViewModel.getNetworkCardSelected());
+        macAddr.textProperty().bind(mainViewModel.getMacAddress());
+        ipAddr.textProperty().bind(mainViewModel.getIpAddress());
+        netmask.textProperty().bind(mainViewModel.getNetmask());
     }
 
     /**
@@ -47,4 +56,16 @@ public class MainViewController {
         networkCardSelector.setValue(EMPTYINFO);
     }
 
+    /**
+     * @author UmiSkky
+     * @apiNote add listener for choice box
+     */
+    public void addListener(){
+        networkCardSelector.getSelectionModel().selectedItemProperty().addListener(
+            (ObservableValue<? extends String> ov, String oldVal, String newVal) -> {
+                mainViewModel.setNetworkCardSelected(newVal);
+                mainViewModel.updateNetworkCardsInfo();
+            }
+        );
+    }
 }
