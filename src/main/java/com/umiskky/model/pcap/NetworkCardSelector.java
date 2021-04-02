@@ -30,7 +30,11 @@ public class NetworkCardSelector {
         ArrayList<PcapNetworkInterface> allNetworkCards = new ArrayList<>();
         if (allDevs != null && !allDevs.isEmpty()) {
             for(Object object : allDevs){
-                allNetworkCards.add((PcapNetworkInterface) object);
+                PcapNetworkInterface pnif = ((PcapNetworkInterface) object);
+                // 排除没有地址的网卡
+                if(pnif.getAddresses().size() != 0) {
+                    allNetworkCards.add(pnif);
+                }
             }
             return allNetworkCards;
         } else {

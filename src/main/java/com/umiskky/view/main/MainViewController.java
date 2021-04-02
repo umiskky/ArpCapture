@@ -2,6 +2,9 @@ package com.umiskky.view.main;
 
 import com.umiskky.viewmodel.main.MainViewModel;
 
+/**
+ * @author UmiSkky
+ */
 public class MainViewController {
 
     private MainViewModel mainViewModel;

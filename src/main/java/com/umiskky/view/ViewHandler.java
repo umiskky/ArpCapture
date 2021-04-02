@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Locale;
 
+/**
+ * @author UmiSkky
+ */
 public class ViewHandler {
 
     private Stage stage;

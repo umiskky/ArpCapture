@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 /**
  * JavaFX App
+ * @author UmiSkky
  */
 public class ArpCapApp extends Application {
 

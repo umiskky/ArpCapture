@@ -1,5 +1,8 @@
 package com.umiskky.model;
 
+/**
+ * @author UmiSkky
+ */
 public class ModelFactory {
 
     private DateModel dateModel;
