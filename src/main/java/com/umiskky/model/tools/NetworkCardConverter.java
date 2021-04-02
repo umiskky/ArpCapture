@@ -13,8 +13,8 @@ import java.util.List;
 public class NetworkCardConverter {
     /**
      *  Convert network card properties to string
-     * @param pnif
-     * @return
+     * @param pnif PcapNetworkInterface
+     * @return NetworkCardDto which is converted from PcapNetworkInterface
      */
     public static NetworkCardDto networkCardConverter(PcapNetworkInterface pnif){
 
