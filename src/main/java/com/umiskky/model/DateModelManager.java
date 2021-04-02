@@ -6,6 +6,7 @@ import com.umiskky.model.tools.NetworkCardConverter;
 import org.pcap4j.core.PcapNetworkInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DateModelManager implements DateModel{
 
@@ -14,8 +15,8 @@ public class DateModelManager implements DateModel{
      * @return arrayList of all network cards
      */
     @Override
-    public  ArrayList<NetworkCardDto> getAllNetworkCards() throws Exception{
-        ArrayList<NetworkCardDto> allDevs = new ArrayList<>();
+    public  HashMap<String, NetworkCardDto> getAllNetworkCards() throws Exception{
+        HashMap<String, NetworkCardDto> allDevs = new HashMap<>();
         ArrayList<PcapNetworkInterface> tmp = new ArrayList<>();
         try {
             tmp = NetworkCardSelector.getAllNetworkCards();
@@ -26,7 +27,7 @@ public class DateModelManager implements DateModel{
             NetworkCardDto networkCardDto = NetworkCardConverter.networkCardConverter(pif);
             //排除没有名字的网卡
             if (networkCardDto.getName() != null) {
-                allDevs.add(NetworkCardConverter.networkCardConverter(pif));
+                allDevs.put(networkCardDto.getName(), NetworkCardConverter.networkCardConverter(pif));
             }
         }
         return allDevs;
