@@ -7,13 +7,10 @@ import org.pcap4j.core.PcapNetworkInterface;
 
 import java.util.ArrayList;
 
-/**
- * @author UmiSkky
- */
 public class DateModelManager implements DateModel{
 
     /**
-     *
+     * @author UmiSkky
      * @return arrayList of all network cards
      */
     @Override

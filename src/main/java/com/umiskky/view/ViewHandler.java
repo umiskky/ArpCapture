@@ -10,9 +10,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Locale;
 
-/**
- * @author UmiSkky
- */
 public class ViewHandler {
 
     private Stage stage;
@@ -35,12 +32,12 @@ public class ViewHandler {
         loader.setLocation(getClass().getResource(viewToOpen.toLowerCase(Locale.ROOT) + "/" + viewToOpen + "View.fxml"));
         root = loader.load();
         switch (viewToOpen){
-            case "MainView":
+            case "Main":
                 MainViewController mainViewController = loader.getController();
                 mainViewController.init(viewModelFactory.getMainViewModel());
                 stage.setTitle("ArpCapture");
                 break;
-            case "OtherView":
+            case "Other":
                 break;
             default:
                 break;

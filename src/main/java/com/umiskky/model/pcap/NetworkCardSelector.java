@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author UmiSkky
- */
 public class NetworkCardSelector {
 
     /**

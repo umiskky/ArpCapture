@@ -7,12 +7,10 @@ import org.pcap4j.core.PcapNetworkInterface;
 
 import java.util.List;
 
-/**
- * @author UmiSkky
- */
 public class NetworkCardConverter {
     /**
-     *  Convert network card properties to string
+     * @author UmiSkky
+     * @apiNote Convert network card properties to string
      * @param pnif PcapNetworkInterface
      * @return NetworkCardDto which is converted from PcapNetworkInterface
      */
