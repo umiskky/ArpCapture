@@ -2,6 +2,7 @@ package com.umiskky.viewmodel.main;
 
 import com.umiskky.model.DateModel;
 import com.umiskky.model.dto.NetworkCardDto;
+import com.umiskky.model.tools.AddressUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.Getter;
@@ -19,6 +20,8 @@ public class MainViewModel {
     private StringProperty ipAddress;
     private StringProperty netmask;
 
+    private StringProperty ipInput;
+
     private HashMap<String, NetworkCardDto> networkCardDtoHashMap;
     private ArrayList<String> networkCardName;
 
@@ -27,24 +30,25 @@ public class MainViewModel {
 
     public MainViewModel(DateModel dateModel) {
         this.dateModel = dateModel;
-        propertiesInit();
-        networkCardsSelectorInit();
+        vmPropertiesInit();
+        vmNetworkCardsSelectorInit();
     }
 
     /**
      * @author Umiskky
      * @apiNote this method is used to init the binding-properties
      */
-    public void propertiesInit(){
+    public void vmPropertiesInit(){
         macAddress = new SimpleStringProperty();
         ipAddress = new SimpleStringProperty();
         netmask = new SimpleStringProperty();
+        ipInput = new SimpleStringProperty();
     }
     /**
      * @author Umiskky
      * @apiNote this method is used to get NetworkCards Info from data model
      */
-    public void networkCardsSelectorInit(){
+    public void vmNetworkCardsSelectorInit(){
         networkCardName = new ArrayList<>();
         networkCardDtoHashMap = new HashMap<>();
         try {
@@ -61,7 +65,7 @@ public class MainViewModel {
      * @author Umiskky
      * @apiNote this method is used to update view of NetworkCards info
      */
-    public void updateNetworkCardsInfo(){
+    public void vmUpdateNetworkCardsInfo(){
         if(networkCardName.contains(networkCardSelected)){
             NetworkCardDto networkCardDto = networkCardDtoHashMap.get(networkCardSelected);
             macAddress.setValue(networkCardDto.getLinkLayerAddr());
@@ -72,5 +76,23 @@ public class MainViewModel {
             ipAddress.setValue("");
             netmask.setValue("");
         }
+    }
+
+    /**
+     * @author Umiskky
+     * @apiNote this method is used to send an arp request
+     */
+    public void vmSendArpRequest(){
+        if(networkCardName.contains(networkCardSelected)){
+            String ipAddress = ipInput.getValue();
+            if(AddressUtils.isValidIPAddress(ipAddress)) {
+                dateModel.sendArpRequest(networkCardDtoHashMap.get(networkCardSelected), ipAddress);
+            }else {
+                System.out.println("InValid IP Address!!!");
+            }
+        }else{
+            System.out.println("Please choice a valid network card!!!");
+        }
+
     }
 }

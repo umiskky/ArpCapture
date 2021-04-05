@@ -12,4 +12,5 @@ public interface DateModel {
 
     HashMap<String, NetworkCardDto> getAllNetworkCards() throws Exception;
 
+    void sendArpRequest(NetworkCardDto networkCard, String strDstIpAddress);
 }

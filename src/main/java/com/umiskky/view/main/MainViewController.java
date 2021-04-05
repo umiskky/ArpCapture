@@ -1,5 +1,7 @@
 package com.umiskky.view.main;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.umiskky.viewmodel.main.MainViewModel;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -23,6 +25,12 @@ public class MainViewController {
     @FXML
     private Label netmask;
 
+    @FXML
+    private JFXTextField inputIP;
+
+    @FXML
+    private JFXButton sendArpRequest;
+
     private final static String EMPTYINFO = "选择工作网卡";
     private ArrayList<String> networkCards;
 
@@ -43,6 +51,7 @@ public class MainViewController {
         macAddr.textProperty().bind(mainViewModel.getMacAddress());
         ipAddr.textProperty().bind(mainViewModel.getIpAddress());
         netmask.textProperty().bind(mainViewModel.getNetmask());
+        inputIP.textProperty().bindBidirectional(mainViewModel.getIpInput());
     }
 
     /**
@@ -64,8 +73,11 @@ public class MainViewController {
         networkCardSelector.getSelectionModel().selectedItemProperty().addListener(
             (ObservableValue<? extends String> ov, String oldVal, String newVal) -> {
                 mainViewModel.setNetworkCardSelected(newVal);
-                mainViewModel.updateNetworkCardsInfo();
+                mainViewModel.vmUpdateNetworkCardsInfo();
             }
         );
+        sendArpRequest.setOnAction((e) -> {
+            mainViewModel.vmSendArpRequest();
+        });
     }
 }
