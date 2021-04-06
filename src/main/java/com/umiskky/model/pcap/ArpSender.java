@@ -86,9 +86,6 @@ public class ArpSender implements Callable<String> {
     public String call() throws Exception {
         Packet packet = packetBuilder();
         sendHandle.sendPacket(packet);
-
-        Thread.sleep(1000);
-
         if (sendHandle != null && sendHandle.isOpen()) {
             sendHandle.close();
         }

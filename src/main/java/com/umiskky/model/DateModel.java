@@ -5,6 +5,7 @@ import org.pcap4j.core.PcapPacket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.BiConsumer;
 
 /**
@@ -14,7 +15,7 @@ public interface DateModel {
 
     HashMap<String, NetworkCardDto> getAllNetworkCards() throws Exception;
 
-    void sendArpRequest(NetworkCardDto networkCard, String strDstIpAddress);
+    void sendArpRequest(NetworkCardDto networkCard, String strDstIpAddress, ThreadPoolExecutor executor);
 
-    void catchArpReply(NetworkCardDto networkCard, String strDstIpAddress);
+    PcapPacket catchArpReply(NetworkCardDto networkCard, String strDstIpAddress, ThreadPoolExecutor executor);
 }

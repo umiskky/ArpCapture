@@ -81,9 +81,7 @@ public class MainViewController {
             }
         );
         sendArpRequest.setOnAction((e) -> {
-
-            mainViewModel.vmCaptureArpReply();
-            mainViewModel.vmSendArpRequest();
+            mainViewModel.arpService();
         });
     }
 }

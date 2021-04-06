@@ -7,13 +7,10 @@ import com.umiskky.model.pcap.NetworkCardSelector;
 import com.umiskky.model.tools.NetworkCardConverter;
 import org.pcap4j.core.PcapNetworkInterface;
 import org.pcap4j.core.PcapPacket;
-import org.pcap4j.packet.ArpPacket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.*;
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 
 public class DateModelManager implements DateModel{
 
@@ -22,7 +19,7 @@ public class DateModelManager implements DateModel{
      * @return arrayList of all network cards
      */
     @Override
-    public  HashMap<String, NetworkCardDto> getAllNetworkCards() throws Exception{
+    public  HashMap<String, NetworkCardDto> getAllNetworkCards() {
         HashMap<String, NetworkCardDto> allDevs = new HashMap<>();
         ArrayList<PcapNetworkInterface> tmp = new ArrayList<>();
         try {
@@ -45,57 +42,37 @@ public class DateModelManager implements DateModel{
      * @apiNote send an arp request
      */
     @Override
-    public void sendArpRequest(NetworkCardDto networkCard, String strDstIpAddress) {
-        final int CORE_POOL_SIZE = 5;
-        final int MAX_POOL_SIZE = 10;
-        final int QUEUE_CAPACITY = 20;
-        final Long KEEP_ALIVE_TIME = 1L;
-
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(CORE_POOL_SIZE,
-                MAX_POOL_SIZE,
-                KEEP_ALIVE_TIME,
-                TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(QUEUE_CAPACITY),
-                new ThreadPoolExecutor.CallerRunsPolicy());
-
+    public void sendArpRequest(NetworkCardDto networkCard, String strDstIpAddress, ThreadPoolExecutor executor) {
         Callable<String> arpSenderThread = new ArpSender(networkCard, strDstIpAddress);
         Future<String> future = executor.submit(arpSenderThread);
-
-        if(future.isDone()){
-            System.out.println("Send Successfully!");
-        }else{
-            System.out.println("Send Uncertainly!");
+        try {
+            System.out.println(future.get());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
-        executor.shutdown();
     }
 
+    /**
+     * @author UmiSkky
+     * @param networkCard
+     * @param strDstIpAddress
+     * @param executor
+     * @return
+     */
     @Override
-    public void catchArpReply(NetworkCardDto networkCard, String strDstIpAddress) {
-        final int CORE_POOL_SIZE = 5;
-        final int MAX_POOL_SIZE = 10;
-        final int QUEUE_CAPACITY = 20;
-        final Long KEEP_ALIVE_TIME = 1L;
-
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(CORE_POOL_SIZE,
-                MAX_POOL_SIZE,
-                KEEP_ALIVE_TIME,
-                TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(QUEUE_CAPACITY),
-                new ThreadPoolExecutor.CallerRunsPolicy());
-
-        Supplier<PcapPacket> arpCaptureThread = new ArpCapture(networkCard, strDstIpAddress);
-        CompletableFuture<PcapPacket> completableFuture = CompletableFuture.supplyAsync(arpCaptureThread, executor);
-
-        BiConsumer<PcapPacket, Throwable> callback = new BiConsumer<PcapPacket, Throwable>() {
-            @Override
-            public void accept(PcapPacket packets, Throwable throwable) {
-                packets.get(ArpPacket.class).getHeader().getSrcHardwareAddr().toString();
-                System.out.println("Capture Uncertainly!");
-            }
-        };
-        completableFuture.whenComplete(callback);
+    public PcapPacket catchArpReply(NetworkCardDto networkCard, String strDstIpAddress, ThreadPoolExecutor executor) {
+        PcapPacket packet = null;
+        Callable<PcapPacket> arpCaptureThread = new ArpCapture(networkCard, strDstIpAddress);
+        Future<PcapPacket> future = executor.submit(arpCaptureThread);
+        try {
+            packet = future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
         executor.shutdown();
-
+        System.out.println("Capture Successfully!");
+        System.out.println(packet);
+        return packet;
     }
 
 }

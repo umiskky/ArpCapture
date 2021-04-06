@@ -4,18 +4,19 @@ import com.umiskky.model.dto.NetworkCardDto;
 import com.umiskky.model.pcap.nifbuilder.CaptureNif;
 import lombok.Getter;
 import lombok.Setter;
-import org.pcap4j.core.*;
+import org.pcap4j.core.PcapHandle;
+import org.pcap4j.core.PcapNativeException;
+import org.pcap4j.core.PcapPacket;
+import org.pcap4j.core.Pcaps;
 import org.pcap4j.packet.ArpPacket;
 import org.pcap4j.packet.namednumber.ArpOperation;
 import org.pcap4j.util.MacAddress;
 
-import java.io.EOFException;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
-import java.util.function.Supplier;
 
-public class ArpCapture implements Callable<PcapPacket>, Supplier<PcapPacket> {
+public class ArpCapture implements Callable<PcapPacket> {
 
     @Setter
     @Getter
@@ -26,9 +27,9 @@ public class ArpCapture implements Callable<PcapPacket>, Supplier<PcapPacket> {
     private PcapHandle captureHandle;
 
     /**
-     * @author UmiSkky
      * @param networkCard
      * @param strDstIpAddress
+     * @author UmiSkky
      */
     public ArpCapture(NetworkCardDto networkCard, String strDstIpAddress) {
         this.builderParams = new HashMap<>();
@@ -54,9 +55,9 @@ public class ArpCapture implements Callable<PcapPacket>, Supplier<PcapPacket> {
     }
 
     /**
-     * @author UmiSkky
      * @return
      * @throws Exception
+     * @author UmiSkky
      */
     @Override
     public PcapPacket call() throws Exception {
@@ -70,7 +71,6 @@ public class ArpCapture implements Callable<PcapPacket>, Supplier<PcapPacket> {
                     if (arp.getHeader().getOperation().equals(ArpOperation.REPLY)) {
                         this.exit = true;
                         isCaptured = true;
-//                    return packet;
                     }
                 }
             } catch (TimeoutException ignored) {
@@ -79,47 +79,9 @@ public class ArpCapture implements Callable<PcapPacket>, Supplier<PcapPacket> {
         if (this.captureHandle != null && this.captureHandle.isOpen()) {
             this.captureHandle.close();
         }
-        if(isCaptured){
+        if (isCaptured) {
             return packet;
-        }else {
-            return null;
-        }
-
-    }
-
-    /**
-     * @author UmiSkky
-     * @return
-     */
-    @Override
-    public PcapPacket get() {
-        PcapPacket packet = null;
-        boolean isCaptured = false;
-        while (!exit) {
-            try {
-                try {
-                    packet = this.captureHandle.getNextPacketEx();
-                } catch (PcapNativeException | EOFException | NotOpenException e) {
-                    e.printStackTrace();
-                }
-                assert packet != null;
-                if (packet.contains(ArpPacket.class)) {
-                    ArpPacket arp = packet.get(ArpPacket.class);
-                    if (arp.getHeader().getOperation().equals(ArpOperation.REPLY)) {
-                        this.exit = true;
-                        isCaptured = true;
-//                    return packet;
-                    }
-                }
-            } catch (TimeoutException ignored) {
-            }
-        }
-        if (this.captureHandle != null && this.captureHandle.isOpen()) {
-            this.captureHandle.close();
-        }
-        if(isCaptured){
-            return packet;
-        }else {
+        } else {
             return null;
         }
     }
