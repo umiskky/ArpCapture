@@ -3,7 +3,6 @@ package com.umiskky;
 import com.umiskky.model.ModelFactory;
 import com.umiskky.view.ViewHandler;
 import com.umiskky.viewmodel.ViewModelFactory;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 

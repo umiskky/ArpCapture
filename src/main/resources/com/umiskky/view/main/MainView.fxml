@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -29,9 +30,18 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
+                              <Label alignment="CENTER" layoutX="500.0" layoutY="6.0" prefHeight="24.0" prefWidth="45.0" text="MAC:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="resolvedAddr" layoutX="550.0" layoutY="6.0" prefHeight="24.0" prefWidth="175.0" />
                            </children>
                         </AnchorPane>
                      </top>
+                     <center>
+                        <JFXTreeTableView BorderPane.alignment="CENTER" />
+                     </center>
                   </BorderPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>

@@ -7,9 +7,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.pcap4j.core.PcapPacket;
+import org.pcap4j.packet.ArpPacket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.BiConsumer;
 
 @Getter
 public class MainViewModel {
@@ -21,6 +24,7 @@ public class MainViewModel {
     private StringProperty netmask;
 
     private StringProperty ipInput;
+    private StringProperty resolvedAddr;
 
     private HashMap<String, NetworkCardDto> networkCardDtoHashMap;
     private ArrayList<String> networkCardName;
@@ -43,6 +47,7 @@ public class MainViewModel {
         ipAddress = new SimpleStringProperty();
         netmask = new SimpleStringProperty();
         ipInput = new SimpleStringProperty();
+        resolvedAddr = new SimpleStringProperty();
     }
     /**
      * @author Umiskky
@@ -94,5 +99,22 @@ public class MainViewModel {
             System.out.println("Please choice a valid network card!!!");
         }
 
+    }
+
+    /**
+     * @author UmiSkky
+     * @apiNote this method is used to capture an arp reply package
+     */
+    public void vmCaptureArpReply(){
+        if(networkCardName.contains(networkCardSelected)){
+            String ipAddress = ipInput.getValue();
+            if(AddressUtils.isValidIPAddress(ipAddress)) {
+                dateModel.catchArpReply(networkCardDtoHashMap.get(networkCardSelected), ipAddress);
+            }else {
+                System.out.println("InValid IP Address!!!");
+            }
+        }else{
+            System.out.println("Please choice a valid network card!!!");
+        }
     }
 }

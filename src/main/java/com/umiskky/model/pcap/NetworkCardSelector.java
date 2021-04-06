@@ -28,7 +28,7 @@ public class NetworkCardSelector {
         if (allDevs != null && !allDevs.isEmpty()) {
             for(Object object : allDevs){
                 PcapNetworkInterface pnif = ((PcapNetworkInterface) object);
-                // 排除没有地址的网卡
+
                 if(pnif.getAddresses().size() != 0) {
                     allNetworkCards.add(pnif);
                 }

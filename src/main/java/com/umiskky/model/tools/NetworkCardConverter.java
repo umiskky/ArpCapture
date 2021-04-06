@@ -26,7 +26,7 @@ public class NetworkCardConverter {
                 ipv4Addresses = ob;
             }
         }
-        //排除没有IPV4地址的网卡
+
         if (ipv4Addresses != null){
             PcapIpV4Address addresses = (PcapIpV4Address) ipv4Addresses;
             String address = String.valueOf(addresses.getAddress());

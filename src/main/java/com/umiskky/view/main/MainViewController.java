@@ -31,6 +31,9 @@ public class MainViewController {
     @FXML
     private JFXButton sendArpRequest;
 
+    @FXML
+    private Label resolvedAddr;
+
     private final static String EMPTYINFO = "选择工作网卡";
     private ArrayList<String> networkCards;
 
@@ -51,6 +54,7 @@ public class MainViewController {
         macAddr.textProperty().bind(mainViewModel.getMacAddress());
         ipAddr.textProperty().bind(mainViewModel.getIpAddress());
         netmask.textProperty().bind(mainViewModel.getNetmask());
+        resolvedAddr.textProperty().bind(mainViewModel.getResolvedAddr());
         inputIP.textProperty().bindBidirectional(mainViewModel.getIpInput());
     }
 
@@ -77,6 +81,8 @@ public class MainViewController {
             }
         );
         sendArpRequest.setOnAction((e) -> {
+
+            mainViewModel.vmCaptureArpReply();
             mainViewModel.vmSendArpRequest();
         });
     }
