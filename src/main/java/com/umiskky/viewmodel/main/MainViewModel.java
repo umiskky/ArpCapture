@@ -3,6 +3,7 @@ package com.umiskky.viewmodel.main;
 import com.umiskky.model.DateModel;
 import com.umiskky.model.dto.NetworkCardDto;
 import com.umiskky.model.tools.AddressUtils;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.util.function.BiConsumer;
 @Getter
 public class MainViewModel {
 
-    private  DateModel dateModel;
+    private DateModel dateModel;
 
     private StringProperty macAddress;
     private StringProperty ipAddress;
