@@ -2,11 +2,11 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,91 +14,71 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.umiskky.view.main.MainViewController">
-   <children>
-      <BorderPane layoutX="76.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="570.0" prefWidth="750.0" BorderPane.alignment="CENTER">
-              <items>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <top>
-                        <AnchorPane prefHeight="30.0" prefWidth="750.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <JFXTextField fx:id="inputIP" focusColor="#66ccff" layoutX="60.0" layoutY="6.0" prefHeight="24.0" prefWidth="120.0" />
-                              <JFXButton fx:id="sendArpRequest" alignment="CENTER" buttonType="RAISED" layoutX="240.0" layoutY="6.0" prefHeight="24.0" prefWidth="120.0" ripplerFill="#66ccff" text="SendArpRequest" />
-                              <Label alignment="CENTER" layoutX="10.0" layoutY="6.0" prefHeight="24.0" prefWidth="40.0" text="IP">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="500.0" layoutY="6.0" prefHeight="24.0" prefWidth="45.0" text="MAC:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="resolvedAddr" layoutX="550.0" layoutY="6.0" prefHeight="24.0" prefWidth="175.0" />
-                           </children>
-                        </AnchorPane>
-                     </top>
-                     <center>
-                        <JFXTreeTableView BorderPane.alignment="CENTER" />
-                     </center>
-                  </BorderPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <ScrollPane prefHeight="172.0" prefWidth="365.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="350.0" />
-                          </content>
-                        </ScrollPane>
-                     </children>
+   <BorderPane layoutX="76.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+         <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="570.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <AnchorPane prefHeight="30.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <JFXTextField fx:id="inputIP" focusColor="#66ccff" layoutX="60.0" layoutY="6.0" prefHeight="24.0" prefWidth="120.0" />
+                     <JFXButton fx:id="sendArpRequest" alignment="CENTER" buttonType="RAISED" layoutX="240.0" layoutY="6.0" prefHeight="24.0" prefWidth="120.0" ripplerFill="#66ccff" text="SendArpRequest" />
+                     <Label alignment="CENTER" layoutX="10.0" layoutY="6.0" prefHeight="24.0" prefWidth="40.0" text="IP">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </Label>
+                     <Label alignment="CENTER" layoutX="500.0" layoutY="6.0" prefHeight="24.0" prefWidth="45.0" text="MAC:">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="resolvedAddr" layoutX="550.0" layoutY="6.0" prefHeight="24.0" prefWidth="175.0" />
                   </AnchorPane>
-              </items>
-            </SplitPane>
-         </center>
-         <top>
-            <AnchorPane prefHeight="30.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox layoutX="139.0" layoutY="-39.0" prefHeight="30.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <ChoiceBox fx:id="networkCardSelector" prefHeight="30.0" prefWidth="320.0" />
-                     </children>
-                  </HBox>
-               </children>
+               </top>
+               <center>
+                  <TableView fx:id="arpPacketTable" prefHeight="270.0" prefWidth="750.0" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <TreeView fx:id="arpHeaderTree" prefHeight="270.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </AnchorPane>
-         </top>
-         <left>
-            <AnchorPane prefHeight="377.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-               <children>
-                  <VBox layoutX="14.0" layoutY="61.0" prefHeight="570.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="165.0" text="网卡信息">
-                           <font>
-                              <Font name="Microsoft YaHei Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="30.0" prefWidth="165.0" text="MAC">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="macAddr" prefHeight="30.0" prefWidth="165.0" />
-                        <Label prefHeight="30.0" prefWidth="165.0" text="IP">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="ipAddr" prefHeight="30.0" prefWidth="165.0" />
-                        <Label prefHeight="30.0" prefWidth="165.0" text="Netmask">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="netmask" prefHeight="30.0" prefWidth="165.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-         </left>
-      </BorderPane>
-   </children>
+         </SplitPane>
+      </center>
+      <top>
+         <AnchorPane prefHeight="30.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+            <HBox layoutX="139.0" layoutY="-39.0" prefHeight="30.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <ChoiceBox fx:id="networkCardSelector" prefHeight="30.0" prefWidth="400.0" />
+            </HBox>
+         </AnchorPane>
+      </top>
+      <left>
+         <AnchorPane prefHeight="377.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+            <VBox layoutX="14.0" layoutY="61.0" prefHeight="570.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <Label alignment="CENTER" prefHeight="30.0" prefWidth="165.0" text="网卡信息">
+                  <font>
+                     <Font name="Microsoft YaHei Bold" size="14.0" />
+                  </font>
+               </Label>
+               <Label prefHeight="30.0" prefWidth="165.0" text="MAC">
+                  <font>
+                     <Font name="System Bold" size="13.0" />
+                  </font>
+               </Label>
+               <Label fx:id="macAddr" prefHeight="30.0" prefWidth="165.0" />
+               <Label prefHeight="30.0" prefWidth="165.0" text="IP">
+                  <font>
+                     <Font name="System Bold" size="13.0" />
+                  </font>
+               </Label>
+               <Label fx:id="ipAddr" prefHeight="30.0" prefWidth="165.0" />
+               <Label prefHeight="30.0" prefWidth="165.0" text="Netmask">
+                  <font>
+                     <Font name="System Bold" size="13.0" />
+                  </font>
+               </Label>
+               <Label fx:id="netmask" prefHeight="30.0" prefWidth="165.0" />
+            </VBox>
+         </AnchorPane>
+      </left>
+   </BorderPane>
 </AnchorPane>

@@ -1,7 +1,6 @@
 package com.umiskky.model.pcap;
 
 import com.umiskky.model.dto.NetworkCardDto;
-import com.umiskky.model.pcap.nifbuilder.CaptureNif;
 import com.umiskky.model.pcap.nifbuilder.SendNif;
 import org.pcap4j.core.PcapHandle;
 import org.pcap4j.packet.ArpPacket;
@@ -22,11 +21,9 @@ public class ArpSender implements Callable<String> {
     private InetAddress strDstIpAddress;
     private MacAddress srcMacAddress;
     private MacAddress dstMacAddress;
-    private MacAddress resolvedAddr;
     private ArpHardwareType arpHardwareType;
 
     private SendNif sendNifBuilder;
-    private CaptureNif captureNifBuilder;
     private PcapHandle sendHandle;
 
 
@@ -47,7 +44,6 @@ public class ArpSender implements Callable<String> {
 
         String nifName = networkCard.getName();
         this.sendNifBuilder = new SendNif(nifName);
-//        this.captureNifBuilder = new CaptureNif(nifName);
         this.sendHandle = sendNifBuilder.buildNif();
         this.arpHardwareType = ArpHardwareType.getInstance(sendHandle.getDlt().value().shortValue());
     }

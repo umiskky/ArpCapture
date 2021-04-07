@@ -1,12 +1,16 @@
 package com.umiskky.viewmodel.main;
 
 import com.umiskky.model.DateModel;
+import com.umiskky.model.dto.ArpPacketHeader;
+import com.umiskky.model.dto.ArpPacketString;
 import com.umiskky.model.dto.NetworkCardDto;
 import com.umiskky.model.tools.AddressUtils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.concurrent.Task;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import lombok.Getter;
 import lombok.Setter;
 import org.pcap4j.core.PcapPacket;
@@ -34,6 +38,11 @@ public class MainViewModel {
     private HashMap<String, NetworkCardDto> networkCardDtoHashMap;
     private ArrayList<String> networkCardName;
     private PcapPacket resolvedArpPacket;
+    private HashMap<Integer, PcapPacket> arpPacketsMap;
+
+    private ObservableList<ArpPacketHeader> tableItems;
+    private ObservableMap<String, ArrayList<String>> treeItems;
+    private ArpPacketHeader tableSelectedItem;
 
     @Setter
     private String networkCardSelected;
@@ -54,6 +63,10 @@ public class MainViewModel {
         netmask = new SimpleStringProperty();
         ipInput = new SimpleStringProperty();
         resolvedAddr = new SimpleStringProperty();
+        tableItems = FXCollections.observableArrayList();
+        treeItems = FXCollections.observableHashMap();
+
+        arpPacketsMap = new HashMap<>();
     }
     /**
      * @author Umiskky
@@ -91,6 +104,22 @@ public class MainViewModel {
 
     /**
      * @author Umiskky
+     * @apiNote this method is used to update tree view
+     */
+    public void vmUpdateTreeView(ArpPacketHeader arpPacketHeader){
+        PcapPacket packet = arpPacketsMap.get(arpPacketHeader.getHashcode());
+        ArpPacketString arpPacketString = new ArpPacketString(packet);
+        HashMap<String, ArrayList<String>> arpPacket = arpPacketString.getArpPacketData();
+        treeItems.clear();
+        treeItems.put("time", arpPacket.get("time"));
+        treeItems.put("length", arpPacket.get("length"));
+        treeItems.put("ethernetHeader", arpPacket.get("ethernetHeader"));
+        treeItems.put("arpHeader", arpPacket.get("arpHeader"));
+        treeItems.put("ethernetPad", arpPacket.get("ethernetPad"));
+    }
+
+    /**
+     * @author Umiskky
      * @apiNote this method is used to send an arp request
      */
     public void vmSendArpRequest(ThreadPoolExecutor executor){
@@ -108,7 +137,7 @@ public class MainViewModel {
     }
 
     /**
-     * @author UmiSkky
+     * @author Umiskky
      * @apiNote this method is used to capture an arp reply package
      */
     public PcapPacket vmCaptureArpReply(ThreadPoolExecutor executor){
@@ -127,7 +156,8 @@ public class MainViewModel {
     }
 
     /**
-     * @author UmiSkky
+     * @author Umiskky
+     * @apiNote this method is used to provide Arp send and capture service
      */
     public void arpService(){
         final int CORE_POOL_SIZE = 4;
@@ -156,14 +186,14 @@ public class MainViewModel {
         }, mainExecutor);
         cfCaptureArp.thenAcceptAsync((packet)-> {
             this.resolvedArpPacket = packet;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    resolvedAddr.setValue(packet.get(ArpPacket.class).getHeader().getSrcHardwareAddr().toString());
-                }
+            Platform.runLater(() -> {
+                resolvedAddr.setValue(packet.get(ArpPacket.class).getHeader().getSrcHardwareAddr().toString());
+                tableItems.add(new ArpPacketHeader(packet));
+                arpPacketsMap.put(packet.hashCode(), packet);
             }
             );
         });
+
         mainExecutor.shutdown();
     }
 }

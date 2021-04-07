@@ -10,7 +10,10 @@ import org.pcap4j.core.PcapPacket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class DateModelManager implements DateModel{
 
@@ -54,10 +57,10 @@ public class DateModelManager implements DateModel{
 
     /**
      * @author UmiSkky
-     * @param networkCard
-     * @param strDstIpAddress
-     * @param executor
-     * @return
+     * @param networkCard ?
+     * @param strDstIpAddress ?
+     * @param executor ?
+     * @return PcapPacket
      */
     @Override
     public PcapPacket catchArpReply(NetworkCardDto networkCard, String strDstIpAddress, ThreadPoolExecutor executor) {
