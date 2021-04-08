@@ -115,7 +115,7 @@ public class MainViewModel {
         treeItems.put("length", arpPacket.get("length"));
         treeItems.put("ethernetHeader", arpPacket.get("ethernetHeader"));
         treeItems.put("arpHeader", arpPacket.get("arpHeader"));
-        treeItems.put("ethernetPad", arpPacket.get("ethernetPad"));
+//        treeItems.put("ethernetPad", arpPacket.get("ethernetPad"));
     }
 
     /**

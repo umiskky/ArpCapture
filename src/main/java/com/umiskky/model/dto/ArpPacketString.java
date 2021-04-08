@@ -27,10 +27,10 @@ public class ArpPacketString {
         ArrayList<String> length = new ArrayList<>();
         ArrayList<String> ethernetHeader = new ArrayList<>();
         ArrayList<String> arpHeader = new ArrayList<>();
-        ArrayList<String> ethernetPad = new ArrayList<>();
+//        ArrayList<String> ethernetPad = new ArrayList<>();
 
         String[] stringArray = packetStr.split("\r\n");
-        if(stringArray.length == 18){
+        if(stringArray.length == 16){
             time.add(stringArray[0]);
             length.add(stringArray[1]);
             ethernetHeader.add(stringArray[2]);
@@ -47,15 +47,15 @@ public class ArpPacketString {
             arpHeader.add(stringArray[13].substring(2));
             arpHeader.add(stringArray[14].substring(2));
             arpHeader.add(stringArray[15].substring(2));
-            ethernetPad.add(stringArray[16]);
-            ethernetPad.add(stringArray[17].substring(2));
+//            ethernetPad.add(stringArray[16]);
+//            ethernetPad.add(stringArray[17].substring(2));
         }
 
         arpPacketMap.put("time", time);
         arpPacketMap.put("length", length);
         arpPacketMap.put("ethernetHeader", ethernetHeader);
         arpPacketMap.put("arpHeader", arpHeader);
-        arpPacketMap.put("ethernetPad", ethernetPad);
+//        arpPacketMap.put("ethernetPad", ethernetPad);
         return arpPacketMap;
     }
 }

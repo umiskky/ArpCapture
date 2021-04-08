@@ -74,7 +74,6 @@ public class DateModelManager implements DateModel{
         }
         executor.shutdown();
         System.out.println("Capture Successfully!");
-        System.out.println(packet);
         return packet;
     }
 

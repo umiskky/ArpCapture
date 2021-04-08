@@ -134,7 +134,7 @@
                             <!-- mandatory -->
                             <mainClass>${mainClass}</mainClass>
                             <!-- optional -->
-                            <bundleJre>false</bundleJre>
+<!--                            <bundleJre>true</bundleJre>-->
                             <generateInstaller>true</generateInstaller>
                             <administratorRequired>true</administratorRequired>
                             <platform>windows</platform>
